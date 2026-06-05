@@ -27,6 +27,37 @@ router.get("/", async (req, res) => {
         });
     }
 });
+//BUSCADOR
+//HTTP://IP:3000/herramientas/1
+router.get("/:id", async (req, res) => {
+    try {
+        const query = 'SELECT * FROM herramientas WHERE idherramienta = ?';
+        //Deserealización , el primero alor
+        //El método query devuelve una MATRIZ
+        //db.query = [[registros...], [info_query...]]
+        const [rows] = await db.query(query, [req.params.id]);
+
+        //Es necesario validar si existen datos 
+        if(rows.length === 0){
+            return res.status(404).json({
+                success: false,
+                message: "Herramienta no encontrada"
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: rows[0]
+        })
+
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error en la comunicación al servidor",
+            error: error.message
+        });
+    }
+});
 //Registrar
 router.post("/", async (req, res) => {
     try {
@@ -66,3 +97,4 @@ router.delete("/", async (req, res) => {
         });
     }
 });
+module.exports = router;

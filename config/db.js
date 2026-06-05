@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-require(dotenv).config();
+require('dotenv').config();
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
@@ -12,9 +12,9 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-(() =>{
+(async() =>{
     try{
-        const connection = pool.getConnection();
+        const connection = await pool.getConnection();
         console.log('Conexión al server y Mysql correcto');
         connection.release();
 
