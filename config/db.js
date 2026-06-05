@@ -16,10 +16,10 @@ const pool = mysql.createPool({
     try{
         const connection = pool.getConnection();
         console.log('Conexión al server y Mysql correcto');
-        conexion.release()
+        connection.release();
 
     }catch(error){
-        console.error('Error en la conexión con Mysql:', error);
+        console.error(`Error en la conexión con Mysql: ${error.message}`);
     }
 })();
 
