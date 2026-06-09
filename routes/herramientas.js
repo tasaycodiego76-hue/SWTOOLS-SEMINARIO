@@ -173,10 +173,24 @@ return res.status(400).json({success: false,message: "Se requiere el tipo de her
         });
     }
 });
-router.delete("/", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
+        const query = "DELETE FROM herramientas WHERE idherramienta = ?";
+        const [result]= await db.query(query, [req.params.id])
 
-    }
+        //La consulta se ejecutó sin problemas, pero NO afectó la tabla
+        if(result.affectedRows === 0){
+            return res.status(404).json({
+                success: false,
+                message:"No existe la herramienta que desea eliminar"
+            });
+        }
+        res.json({
+            success: true,
+            message: "Eliminado correctamente"
+        });
+
+     }
     catch (error) {
         res.status(500).json({
             success: false,

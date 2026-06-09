@@ -26,3 +26,4 @@ INSERT INTO herramientas (nombre, marca, descripcion) VALUES
 ('Taladro', 'DeWalt', 'Inalambrico 18V');
 -- Muestra el resultado
 SELECT * FROM herramientas;
+
